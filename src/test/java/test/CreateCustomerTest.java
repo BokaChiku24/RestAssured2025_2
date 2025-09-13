@@ -3,8 +3,10 @@ package test;
 import frameworksetup.BaseTest;
 import io.restassured.response.Response;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import utilities.DataUtil;
+
+import java.util.Hashtable;
 
 import static io.restassured.RestAssured.given;
 
@@ -19,11 +21,11 @@ public class CreateCustomerTest extends BaseTest {
 
     }
 
-    @Test(dependsOnMethods = {"validateAPIWithValidSecretKey"}, dataProvider = "getData")
-    public void validateCreateCustomer(String name, String email, String description) {
+    @Test(dataProviderClass=DataUtil.class,dataProvider="data")
+    public void validateCreateCustomer(Hashtable<String, String> data) {
         Response response = given().auth().basic(config.getProperty("validSecreteKey"), "")
-                .formParam("email", email)
-                .formParam("description", description)
+                .formParam("email", data.get("email"))
+                .formParam("description", data.get("description"))
                 .post(config.getProperty("customerAPIEndPoint"));
         response.prettyPrint();
         Assert.assertEquals(response.statusCode(), 200);
@@ -39,6 +41,7 @@ public class CreateCustomerTest extends BaseTest {
         Assert.assertEquals(response.statusCode(), 401);
     }
 
+    /*
     @DataProvider
     public Object[][] getData(){
         String sheetName = "testdata";
@@ -52,4 +55,5 @@ public class CreateCustomerTest extends BaseTest {
         }
         return data;
     }
+    */
 }

@@ -13,7 +13,7 @@ public class BaseTest {
 
     public static Properties config = new Properties();
     private FileInputStream fileInputStream;
-    public static ExcelReader excel = new ExcelReader(System.getProperty("user.dir") + "/src/test/resources/excel/testdata.xlsx");
+    public static ExcelReader excel = new ExcelReader(System.getProperty("user.dir") + "/src/test/resources/excel/testdata2.xlsx");
 
     @BeforeSuite
     public void setUp() throws IOException {
