@@ -1,5 +1,6 @@
 package test;
 
+import api.CreateCustomerAPI;
 import frameworksetup.BaseTest;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -23,10 +24,15 @@ public class CreateCustomerTest extends BaseTest {
 
     @Test(dataProviderClass=DataUtil.class,dataProvider="data")
     public void validateCreateCustomer(Hashtable<String, String> data) {
-        Response response = given().auth().basic(config.getProperty("validSecreteKey"), "")
-                .formParam("email", data.get("email"))
-                .formParam("description", data.get("description"))
-                .post(config.getProperty("customerAPIEndPoint"));
+        Response response = CreateCustomerAPI.sendPostRequestToCreateCustomerAPIWithValidAPI(data);
+        response.prettyPrint();
+        Assert.assertEquals(response.statusCode(), 200);
+
+    }
+
+    @Test(dataProviderClass=DataUtil.class,dataProvider="data")
+    public void validateCreateCustomerAPIWithInValidSecretKey(Hashtable<String, String> data) {
+        Response response = CreateCustomerAPI.sendPostRequestToCreateCustomerAPIWithInValidAPI(data);
         response.prettyPrint();
         Assert.assertEquals(response.statusCode(), 200);
 
