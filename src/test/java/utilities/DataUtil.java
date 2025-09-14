@@ -9,7 +9,7 @@ import java.util.Hashtable;
 
 public class DataUtil extends BaseTest {
 
-    @DataProvider(name="data")
+    @DataProvider(name="data",parallel = true)
     public static Object[][] getData(Method m) {
     int rows = excel.getRowCount(config.getProperty("testDataSheetName"));
 		System.out.println("Total rows are : " + rows);
